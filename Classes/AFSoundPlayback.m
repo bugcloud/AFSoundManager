@@ -39,6 +39,15 @@ NSString * const AFSoundPlaybackFinishedNotification = @"kAFSoundPlaybackFinishe
     return self;
 }
 
+-(id)initWithItem:(AFSoundItem *)item avAudioSessionCategory:(NSString *)categoryName {
+    if (self == [super init]) {
+        _currentItem = item;
+        [self setUpItem:item avAudioSessionCategory:categoryName];
+        _status = AFSoundStatusNotStarted;
+    }
+    return self;
+}
+
 -(void)setUpItem:(AFSoundItem *)item {
     
     _player = [[AVPlayer alloc] initWithURL:item.URL];
@@ -53,6 +62,12 @@ NSString * const AFSoundPlaybackFinishedNotification = @"kAFSoundPlaybackFinishe
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+}
+
+-(void)setUpItem:(AFSoundItem *)item avAudioSessionCategory:(NSString *)categoryName {
+    [self setUpItem:item];
+    [[AVAudioSession sharedInstance] setCategory:categoryName error:nil];
+    [[AVAudioSession sharedInstance] setActive:YES error:nil];
 }
 
 -(void)listenFeedbackUpdatesWithBlock:(feedbackBlock)block andFinishedBlock:(finishedBlock)finishedBlock {

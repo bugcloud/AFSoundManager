@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSMutableArray *items;
 
 @property (nonatomic, strong) NSTimer *feedbackTimer;
+@property (nonatomic, copy)   NSString *avAudioSessionCategoryName;
 
 @end
 
@@ -31,13 +32,23 @@
             
             _items = [NSMutableArray arrayWithArray:items];
             
-            _queuePlayer = [[AFSoundPlayback alloc] initWithItem:items.firstObject];
+            if (_avAudioSessionCategoryName) {
+                _queuePlayer = [[AFSoundPlayback alloc] initWithItem:items.firstObject avAudioSessionCategory:_avAudioSessionCategoryName];
+            } else {
+                _queuePlayer = [[AFSoundPlayback alloc] initWithItem:items.firstObject];
+            }
             
             [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
         }
     }
     
     return self;
+}
+
+-(id)initWithItems:(NSArray *)items avAudioSessionCategory:(NSString *)categoryName {
+
+    _avAudioSessionCategoryName = categoryName;
+    return [self initWithItems:items];
 }
 
 -(void)listenFeedbackUpdatesWithBlock:(feedbackBlock)block andFinishedBlock:(itemFinishedBlock)finishedBlock {
@@ -172,7 +183,11 @@
 //            [_feedbackTimer resumeTimer];
         }
 
-        _queuePlayer = [[AFSoundPlayback alloc] initWithItem:item];
+        if (_avAudioSessionCategoryName) {
+            _queuePlayer = [[AFSoundPlayback alloc] initWithItem:items.firstObject avAudioSessionCategory:_avAudioSessionCategoryName];
+        } else {
+            _queuePlayer = [[AFSoundPlayback alloc] initWithItem:items.firstObject];
+        }
         [_queuePlayer play];
         [[MPRemoteCommandCenter sharedCommandCenter] playCommand];
         

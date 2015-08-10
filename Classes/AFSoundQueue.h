@@ -17,6 +17,7 @@ typedef void (^feedbackBlock)(AFSoundItem *item);
 typedef void (^itemFinishedBlock)(AFSoundItem *nextItem);
 
 -(id)initWithItems:(NSArray *)items;
+-(id)initWithItems:(NSArray *)items avAudioSessionCategory:(NSString *)categoryName;
 
 @property (nonatomic) AFSoundStatus status;
 
