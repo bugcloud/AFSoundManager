@@ -184,9 +184,9 @@
         }
 
         if (_avAudioSessionCategoryName) {
-            _queuePlayer = [[AFSoundPlayback alloc] initWithItem:items.firstObject avAudioSessionCategory:_avAudioSessionCategoryName];
+            _queuePlayer = [[AFSoundPlayback alloc] initWithItem:item avAudioSessionCategory:_avAudioSessionCategoryName];
         } else {
-            _queuePlayer = [[AFSoundPlayback alloc] initWithItem:items.firstObject];
+            _queuePlayer = [[AFSoundPlayback alloc] initWithItem:item];
         }
         [_queuePlayer play];
         [[MPRemoteCommandCenter sharedCommandCenter] playCommand];

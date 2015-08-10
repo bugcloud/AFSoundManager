@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, AFSoundStatus) {
 };
 
 -(id)initWithItem:(AFSoundItem *)item;
--(id)initWithItem:(AFSoundItem *)item avAudioSessionCategory:(NSString *)categoryName
+-(id)initWithItem:(AFSoundItem *)item avAudioSessionCategory:(NSString *)categoryName;
 
 @property (nonatomic, strong) AVPlayer *player;
 @property (nonatomic) AFSoundStatus status;
